@@ -4,6 +4,7 @@ class CashRegister:
     def __init__(self):
 
         self.current_order = {}
+        self.current_order_value = 0
         self.inventory = Inventory()
 
     def add_product(self, given_product_name): 
@@ -31,11 +32,34 @@ class CashRegister:
             self.current_order[given_product_name]["quantity"] +=1
         # return current_order
 
+# TO DO refactor here other functions like calculate_certainproduct_value
+# TO DO: check for missing keys
+    def apply_discount_greentea(self):
+        # check if theres green tea in current order
+        green_tea_value = 0
+        quantity = self.current_order["green tea"]["quantity"]
+        price = self.current_order["green tea"]["price"]
+        
+        if quantity < 2:
+            green_tea_value = price * quantity
+        
+        else:
+            green_tea_value = price * quantity
+            if quantity % 2 == 0:
+                green_tea_value = green_tea_value/2
+            else:
+                green_tea_value = (green_tea_value/2) + price
+        return green_tea_value
+
+        
+
+
     # def apply_discount_coffee
-    
-    # def apply_discount_greentea
+
     # def apply_discount_strawberries
 
     # def calculate_total: sums value of products in the current order
+        # sum green tea value, coffee value, strawberries value
+
 
 
