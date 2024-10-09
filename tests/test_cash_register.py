@@ -3,52 +3,38 @@ from classes.inventory import Inventory
 from classes.cash_register import CashRegister
 
 class TestCashRegister(unittest.TestCase):
+    def setUp(self):
+        self.cash_register = CashRegister()
+        self.inventory = Inventory()
+        self.products = self.inventory.product_catalog
+
     def test_add_product(self):
         # purpose: successfully add item to cashregister.current_order
+
         # CASE 1: the product user wants to add doesn't exist
-        # setup 1
-        cash_register1 = CashRegister()
-        initial_order1 = cash_register1.current_order.copy()
-        # act 1
-        cash_register1.add_product("Banana")
-        # assert 1
-        self.assertEqual(cash_register1.current_order, initial_order1)
+        initial_order = self.cash_register.current_order.copy()
+        self.cash_register.add_product("banana")
+        self.assertEqual(self.cash_register.current_order, initial_order)
+
         # CASE 2: an existing  product is added correctly to the current_order dictionary for the first time
-        # setup 2:
-        cash_register2 = CashRegister()
-        # act 2
-        cash_register2.add_product("Coffee")
-        expected_current_order2 = {
-            "Coffee": {
-                "code": "CF1",
-                "price": 11.23,
+        expected_current_order = {}
+        for product_name, product_info in self.products.items():
+            self.cash_register.add_product(product_name)
+
+            expected_current_order[product_name] = {
+                "code": product_info["code"],
+                "name": product_info["name"],
+                "price": product_info["price"],
                 "quantity": 1
             }
-        }
-        # assert 2
-        self.assertEqual( cash_register2.current_order, expected_current_order2 )
+            self.assertEqual( self.cash_register.current_order, expected_current_order )
 
         # CASE 3: an existing product is added correctly to the current_order dictionary for the 2nd or more time.
-        # setup 3
-        cash_register3 = CashRegister()
-        cash_register3.current_order = {
-            "Coffee": {
-                "code": "CF1",
-                "price": 11.23,
-                "quantity": 1
-            }
-        }
         # act 3
-        cash_register3.add_product("Coffee")
-        expected_current_order3 = {
-            "Coffee": {
-                "code": "CF1",
-                "price": 11.23,
-                "quantity": 2
-            }
-        }
+        self.cash_register.add_product("coffee")
+        expected_current_order["coffee"]["quantity"] +=1
         # assert 3
-        self.assertEqual(cash_register3.current_order, expected_current_order3)
+        self.assertEqual(self.cash_register.current_order, expected_current_order)
 
 
     def test_apply_discount_coffee(self):
