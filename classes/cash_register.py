@@ -51,12 +51,33 @@ class CashRegister:
                 green_tea_value = (green_tea_value/2) + price
         return green_tea_value
 
-        
 
+    def apply_discount_coffee(self):
+        #nb coefficient for coffee discount
+        coffee_value = 0
+        coffee_discount_coefficient = 0.66
+        quantity = self.current_order["coffee"]["quantity"]
+        price = self.current_order["coffee"]["price"]
+        if quantity < 3:
+            coffee_value = price * quantity
+        else:
+            coffee_value = coffee_discount_coefficient * quantity * price
+        return coffee_value
 
-    # def apply_discount_coffee
-
-    # def apply_discount_strawberries
+    def apply_discount_strawberries(self):
+        # set price of strawberries
+        strawb_full_price = self.inventory.product_catalog["strawberries"]["price"]
+        strawb_discounted_price = 4.50
+        quantity = self.current_order["strawberries"]["quantity"]
+        strawb_value = 0
+        # if quantity < 3, calculate normal value
+        if quantity < 3:
+            strawb_value = strawb_full_price * quantity
+        # if quantity >= 3, change price, calculate disc value
+        else:
+            strawb_value = strawb_discounted_price * quantity
+        # return strawb value
+        return strawb_value
 
     # def calculate_total: sums value of products in the current order
         # sum green tea value, coffee value, strawberries value
