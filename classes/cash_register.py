@@ -1,5 +1,5 @@
 from classes.inventory import Inventory
-
+from fractions import Fraction
 class CashRegister:
     def __init__(self):
 
@@ -37,8 +37,12 @@ class CashRegister:
     def apply_discount_greentea(self):
         # check if theres green tea in current order
         green_tea_value = 0
+        if "green tea" not in self.current_order:
+            return green_tea_value
+        
         quantity = self.current_order["green tea"]["quantity"]
         price = self.current_order["green tea"]["price"]
+
         
         if quantity < 2:
             green_tea_value = price * quantity
@@ -52,31 +56,37 @@ class CashRegister:
         return green_tea_value
 
 # TO DO: put hardcoded value as arguments
-    def apply_discount_coffee(self):
-        #nb coefficient for coffee discount
+    def apply_discount_coffee(self, discount_coefficient =Fraction(2,3), discount_threshold=3):
         coffee_value = 0
-        coffee_discount_coefficient = 0.66
+
+        if "coffee" not in self.current_order:
+            return coffee_value
+        
         quantity = self.current_order["coffee"]["quantity"]
         price = self.current_order["coffee"]["price"]
-        if quantity < 3:
+        if quantity < discount_threshold:
             coffee_value = price * quantity
         else:
-            coffee_value = coffee_discount_coefficient * quantity * price
+            coffee_value = discount_coefficient * quantity * price
         return coffee_value
     
 # TO DO: put hardcoded value as arguments
-    def apply_discount_strawberries(self):
+    def apply_discount_strawberries(self, discounted_price=4.50, discount_threshold=3):
         # set price of strawberries
-        strawb_full_price = self.inventory.product_catalog["strawberries"]["price"]
-        strawb_discounted_price = 4.50
-        quantity = self.current_order["strawberries"]["quantity"]
         strawb_value = 0
+        strawb_full_price = self.inventory.product_catalog["strawberries"]["price"]
+
+        if 'strawberries' not in self.current_order:
+            return strawb_value
+
+        quantity = self.current_order["strawberries"]["quantity"]
+    
         # if quantity < 3, calculate normal value
-        if quantity < 3:
+        if quantity < discount_threshold:
             strawb_value = strawb_full_price * quantity
         # if quantity >= 3, change price, calculate disc value
         else:
-            strawb_value = strawb_discounted_price * quantity
+            strawb_value = discounted_price * quantity
         # return strawb value
         return strawb_value
 
