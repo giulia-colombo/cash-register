@@ -1,6 +1,9 @@
 
 class Inventory:
+    '''Represents an Inventory for storing current products and related information.. 
+    Handles retrieving products.'''
     def __init__(self):
+        '''Initializes a new Inventory with a set product catalog.'''
         self.product_catalog = {
             "coffee": {
                 "code": "CF1",
