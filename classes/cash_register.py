@@ -51,7 +51,7 @@ class CashRegister:
                 green_tea_value = (green_tea_value/2) + price
         return green_tea_value
 
-
+# TO DO: put hardcoded value as arguments
     def apply_discount_coffee(self):
         #nb coefficient for coffee discount
         coffee_value = 0
@@ -63,7 +63,8 @@ class CashRegister:
         else:
             coffee_value = coffee_discount_coefficient * quantity * price
         return coffee_value
-
+    
+# TO DO: put hardcoded value as arguments
     def apply_discount_strawberries(self):
         # set price of strawberries
         strawb_full_price = self.inventory.product_catalog["strawberries"]["price"]
@@ -79,8 +80,15 @@ class CashRegister:
         # return strawb value
         return strawb_value
 
-    # def calculate_total: sums value of products in the current order
-        # sum green tea value, coffee value, strawberries value
+    def calculate_total(self): 
+        '''Calculates total value of current order after applying appropriate product discounts'''
+        subtotals = [
+            self.apply_discount_coffee(), 
+            self.apply_discount_greentea(), 
+            self.apply_discount_strawberries()
+            ]
+        self.current_order_value = sum(subtotals)
+        return self.current_order_value
 
 
 

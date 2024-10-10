@@ -104,9 +104,31 @@ class TestCashRegister(unittest.TestCase):
     def test_calculate_total(self):
         # purpose: calculate and return the total value of products in the order
         # set up
+        self.cash_register.current_order = {
+        "coffee": {
+            "code": "CF1",
+            "name": "Coffee",
+            "price": 11.23,
+            "quantity": 3
+        },
+        "strawberries": {
+            "code": "SR1",
+            "name": "Strawberries",
+            "price": 5,
+            "quantity": 3
+        },
+        "green tea": {
+            "code": "GR1",
+            "name": "Green Tea",
+            "price": 3.11,
+            "quantity": 2
+        }
+    }
+        expected_order_value =  38.8454
         # act
+        order_value = self.cash_register.calculate_total()
         # assert
-        pass
+        self.assertEqual(order_value, expected_order_value)
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
