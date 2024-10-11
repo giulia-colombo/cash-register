@@ -10,7 +10,6 @@ def main():
     print("When you are finished scanning, please enter 'done'. Enter 'exit' at any time to leave.")
     while True:
         user_input = sanitize_user_input(input("Enter a product name: "))
-        print(f"LOGS: user_input ==> ", user_input)
 
         if user_input == "exit":
             print("Thank you for visiting us. See you soon.")
@@ -30,7 +29,8 @@ def main():
             print("It looks like this product doesn't exist in our catalog. Please try with an existing product.")
         else:
             cash_register.add_product(user_input)
-            print(f"1 ({user_input}) has been added to cart.")
+            print(f"1 ({user_input}) @ {found_product['price']} has been added to cart.")
+
 
 if __name__ == "__main__":
     main()
