@@ -63,11 +63,11 @@ Manages the existing products.
 
 #### `product_catalog`
 
-a dictionary that holds product details such as product code, name, and price.
+Dictionary that holds product details such as product code, name, and price.
 
 #### `retrieve_product(given_product_name)`
 
-retrieves a product with its detail from the catalog
+Retrieves a product with its detail from the catalog
 
 - `given_product_name (str)`: name of the product to retrieve.
 - returns: the found `product` (dictionary) or `None` if no match is found.
@@ -78,15 +78,15 @@ Manages the order, applies discounts and calculates the total.
 
 #### `current_order`
 
-dictionary that keeps track of the products added to the cart and their quantities.
+Dictionary that keeps track of the products added to the cart and their quantities.
 
 #### `current_order_value`
 
-a numerical value representing the final, total cost of the order (after discounts).
+Numerical value representing the final, total cost of the order (after discounts).
 
 #### `inventory`
 
-an instance of Inventory, used to access product information.
+Instance of Inventory, used to access product information.
 
 #### `add_product (given_product_name)`
 
@@ -99,7 +99,7 @@ Adds a product to the current order. If the product is already in the order, its
 
 Applies a "buy-one-get-one-free" discount for green tea, every time 2 items of green tea are added to the cart.
 
-- returns: `green_tea_value` (float): the total value of the green tea items after the discount is applied. If no discount is applied the value is calculated without a discount. If no green tea is in the order, the value will be 0.
+- Returns: `green_tea_value` (float): the total value of the green tea items after the discount is applied. If no discount is applied the value is calculated without a discount. If no green tea is in the order, the value will be 0.
 
 #### `apply_discount_coffee(self, discount_coefficient=Fraction(2,3), discount_threshold=3)`
 
@@ -131,3 +131,10 @@ Cleans user input by converting it to lowercase and removing extra spaces.
 
 - `input` (str) : the input to be sanitized.
 - returns: `sanitized_input` (str): the sanitized input.
+
+## Future enhancements:
+
+- To make the product catalog extensible, and not fixed as it is now, create a `Product` class that allows to create new products with the same blueprint and holds methods for updating and retrieving single product information.
+  - As of now, we are assuming we only have 3 products. In the future, we might need a `print_product_catalog` method inside the `Inventory` class that dynamically builds and displays the product catalog for the customer, so they know what's available.
+- Include an attribute for the `CashRegister` class such as `self.current_order_value_before_discount` that calculates the running order value before discounts. This could be used to show the value of the order to the customer after a product has been added to cart.
+- Keep track of the discounts accrued and display them to the customer at the end, possibly grouped by product type.
